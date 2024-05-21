@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User list</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" href="/images/logo1.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body onload="getUsers()" class="bg-dark-subtle">
+    <div class="container-fluid mt-2">
+        <!-- menu  -->
+  
+        <nav class="navbar" style="background-color: #38383989; backdrop-filter: blur(2px);" img="/images/logo/logo1.png" >
+            <div class="container-fluid">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item" >
+                        <a href="admin.html" class="btn btn-outline-light me-2">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search" id="searchingForm" >
+                    <select name="searchType" id="searchType" class="form-select me-2">
+                        <option selected value="1">E-mail</option>
+                        <option value="2">Username</option>
+                        <option value="3">Role</option>
+                    </select>
+
+
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        name="searching">
+                    <button class="btn btn-outline-light me-2" type="submit">
+                          <i class="fa-brands fa-sistrix"></i></button>
+                </form>
+
+                <button id="logout" onclick="logout()" class="btn btn-outline-light float-end">
+                    <i class="fa-solid fa-lock-open"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="table-responsive">
+            <table class="table table-hover  table  text-center align-middle">
+                <thead>
+                    <tr>
+                        <th>userID</th>
+                        <th>E-mail</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Role edit</th>
+                        <th>User delete</th>
+                    </tr>
+                </thead>
+                <tbody id="users">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- a felhasználó szerepkörének módosítása -->
+    <div class="modal fade" id="editRoleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Role edit</h1>
+                    <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editUsername">Role</label>
+                        <input type="number" min="0" max="1" limit="1" class="form-control" id="editRole" name="editRole">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-square-xmark"></i></button>
+                    <button type="button" class="btn btn-outline-success" onclick="changeRole()">
+                        <i class="fa-solid fa-square-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="admin.js"></script>
+    <script src="editUsers.js"></script>
+    <script src="logout.js"></script>
+</body>
+
+</html>

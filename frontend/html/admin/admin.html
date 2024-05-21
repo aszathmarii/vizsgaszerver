@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="hu"
+data-app="public" data-temple="shop-list" data-container-key data-content-key data-logged-in="false" data-cookie-prefix="xf_" >
+   
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin</title>
+    <link rel="stylesheet" type="image/png" href="/backend/images/2024_02_28_admin.png" sizes="32x32">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="shortcut icon" href="/images/logo1.png" type="image/x-icon">
+
+</head>
+
+<body style="background-image: url(/images/web.jpg);" onload="getUserEmail(); fetchProducts()">
+
+    <div class="container-fluid " id="userID">
+    <!-- menu  -->
+
+      <!-- OffcanvasProfile -->
+      <div class="offcanvas offcanvas-top" id="offcanvasProfile" aria-labelledby="offcanvasProfileLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasProfileLabel">Profile</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <!-- Your profile content goes here -->
+          <nav class="navbar navbar-expand-sm rounded" style="background-color: #38383989; backdrop-filter: blur(2px);">
+            <div class="logo">
+              <img class="logoimg" src="/images/logo1.png" alt="Sim Clothes Shop Logo">
+              <h6 id="navcim" href="/home" target="_blank" rel="noopener noreferrer" class=""></h6>
+              <h6 class="headwebname">Sim Clothes Shop</h6>
+            </div>
+            <div class="container-fluid">
+              <ul class="navbar-nav me-left mb-2 mb-lg-2">
+                <li class="nav-item me-left">
+                  <button type="button" class="btn btn-outline-light" aria-current="page" id="profile"><i class="fa-solid fa-user-gear"></i></button>
+                </li>
+              </ul>
+           
+              <a href="editUsers.html" class="btn btn-outline-light float-end me-2">
+                <i class="fa-solid fa-user-large-slash"></i>
+              </a>
+    
+              <i id="refreshButton" class="fa-solid fa-sync fa-spin btn " ></i>
+    
+              <button id="logout" onclick="logout()" class="btn btn-outline-light float-end">
+                <i class="fa-solid fa-lock-open"></i>
+              </button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    
+    
+       <!--  menusor-->
+       <nav class="nav-menu-frame">
+        <div class="nav-menu" style="background-color: #38383989; backdrop-filter: blur(2px);">
+            <ul class="navbar-nav me-left mb-2 mb-lg-2">
+                <li class="nav-item">
+                    <button type="button" class="btn " data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfile"
+                        aria-controls="offcanvasProfile">
+                        <a class="nav-link active" aria-current="page" id="home">
+                            <i class="fa-solid fa-house  btn btn-outline-light"></i>
+                        </a>
+                    </button>
+                </li>
+                <!-- <li class="nav-item right">
+                <a data-bs-backdrop="canvas" href="#categorycanvas" role="button" aria-controls="categorycanvas"
+                    class="nav-link active" aria-current="page" id="category">
+                    <button class="fa-solid fa-pen  btn btn-outline-light " onclick="category()"></button>
+                </a>
+            </li> -->
+                <li class="nav-item">
+                    <button type="button" class="btn " data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+    
+                        <a class="nav-link active" aria-current="page" id="news">
+                            <i class="fa-solid fa-square-plus  btn btn-outline-light "></i>
+                        </a>
+                    </button>
+                </li>
+                <!--      keresésgomb -->
+                <li class="nav-item">
+                    <button type="button" class="btn " data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch"
+                        aria-controls="offcanvasSearch">
+    
+                        <a class="nav-link active" aria-current="page" id="news">
+                            <i class="fa-brands fa-sistrix  btn btn-outline-light "></i>
+                        </a>
+                    </button>
+                </li>
+    
+    
+                <!--    <li class="nav-item">
+                    <button type="button" class="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasKosar" aria-controls="offcanvasKosar">
+                    <a  href="/frontend/html/user/pay.html" class="nav-link active" aria-current="page" id="bag">
+                        <i class="fa-solid fa-basket-shopping btn btn-outline-light"></i>
+    
+                    </a>
+                </button>
+                </li> -->
+    
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- új termék felvétele -->
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Product upload</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Your form goes here -->
+            <div class="updatediv" style="background-color: #38383989; backdrop-filter: blur(2px);">
+                <form id="create-product" class="mt-2 mb-2">
+                    <label for="name">
+                        Clothes name/type:
+                        <input type="text" name="name" id="name" class="form-control me-2">
+                    </label>
+    
+                    <label for="size">Size
+                        <select name="size" id="size" class="form-select" aria-label="Default select example">
+                            <option selected>Select size</option>
+                            <option value="1">XS</option>
+                            <option value="2">S</option>
+                            <option value="3">M</option>
+                            <option value="4">L</option>
+                            <option value="5">XL</option>
+                            <option value="6">XXL</option>
+                        </select>
+                    </label>
+    
+                    <label for="color">Color
+                        <select name="color" id="color" class="form-select" aria-label="Default select example">
+                            <option selected>Select color</option>
+                            <option value="1">Blue</option>
+                            <option value="2">Black</option>
+                            <option value="3">White</option>
+                            <option value="4">Red</option>
+                            <option value="5">Green</option>
+                            <option value="6">Grey</option>
+                            <option value="7">Blue Marl</option>
+                            <option value="8">Tobacco</option>
+                            <option value="9">Dark Red</option>
+                            <option value="10">Light Blue</option>
+                            <option value="11">Chocolate</option>
+                            <option value="12">Beige</option>
+                            <option value="13">Light Grey</option>
+                            <option value="14">Taupe Grey</option>
+                            <option value="15">Camel</option>
+                            <option value="16">Anthracite grey</option>
+                            <option value="17">Khaki</option>
+                            <option value="18">Ecru</option>
+                            <option value="19">Brown</option>
+                            <option value="20">Navy Blue</option>
+                            <option value="21">Stone</option>
+                            <option value="22">Yellow</option>
+                            <option value="23">Striped</option>
+                            <option value="24">Sand</option>
+                            <option value="25">Ink Blue</option>
+                            <option value="26">Dark Khaki</option>
+                            <option value="27">Grey Marl</option>
+                            <option value="28">Light Green</option>
+                        </select>
+                    </label>
+    
+                    <label for="cathegory">Category
+                        <select name="cathegory" id="category" class="form-select"
+                            aria-label="Default select example">
+                            <option selected>Select category</option>
+                            <option value="1">Dress</option>
+                            <option value="2">Hoodies</option>
+                            <option value="3">Manjacket</option>
+                            <option value="4">Sweater</option>
+                            <option value="5">Tops</option>
+                            <option value="6">Woman</option>
+                            <option value="7">Jeans</option>
+                            <option value="8">Shorts</option>
+                        </select>
+                    </label>
+    
+                    <label for="price" style="width: 100px;">
+                        Price
+                        <input type="number" name="price" id="price" min="0" max="1000" class="form-control me-2">
+                    </label>
+    
+                    <label for="stock" style="width: 100px;">
+                        Stock
+                        <input type="number" name="stock" id="stock" min="0" max="200" class="form-control me-2">
+                    </label>
+    
+                    <label for="image">
+                        IMG
+                        <input type="file" name="image" id="image" class="form-control me-2">
+                    </label>
+    
+                    <button type="submit" class="btn btn-success btn-sm mb-1"><i
+                            class="fa-solid fa-plus"></i></button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    
+
+        <!--card drawing-->
+       
+        <div id="product-list" class="row">
+
+        </div>
+
+        <footer class="p-footer" id="footer" style="margin-bottom: 0px;">
+            <div class="uix_extendedFooter">
+                <div class="pageContent">
+                    <div class="uix_extendedFooterRow">
+                    <div class="p-footer-copyrightRow">
+                        <div class="pageContent">
+                            <div class="uix_copyrightBlock">
+                                
+                                    <div class="p-footer-copyright">
+                                        
+                                            <a  style="color:aliceblue ;" href="https://dszcbaross.hu/" class="u-concealed" dir="ltr" target="_blank" rel="sponsored noopener">Community platform by Szathmári Bence <sup>®</sup> <span class="copyright">© 2019-2024 BAROSSGÁBOR.</span></a>
+                                            <span class="thBranding"><span class="thBranding__pipe"> | </span><a style="color:aliceblue ;" href="https://www.instagram.com/a_szathmarii/" class="u-concealed" target="_BLANK" nofollow="nofollow">Style and add-ons by Szathmári Bence</a></span>
+                                            Created &amp; Designed by: <b>Szathmári Bence</b>                          
+                                    </div>
+                         </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </footer>
+    
+        <!-- category button  modal window -->
+
+        <!-- <div class="offcanvas offcanvas-start" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div>
+                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text,
+                    images,
+                    lists, etc.
+                </div>
+                <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+       
+        <!-- szerkesztés gomb modal ablaka -->
+        <div class="modal fade" id="updateProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" >Update</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateProductForm">
+                            <div class="form-group">
+                                <label for="editName">Clothes name</label>
+                                <input type="text" class="form-control" id="editName" name="editName">
+
+                                <label for="editSize">Size</label>
+                                <select name="editSize" id="editSize" class="form-select"
+                                    aria-label="Default select example">
+                                    <option selected>Select size</option>
+                                    <option value="1">XS</option>
+                                    <option value="2">S</option>
+                                    <option value="3">M</option>
+                                    <option value="4">L</option>
+                                    <option value="5">XL</option>
+                                    <option value="6">XXL</option>
+                                </select>
+
+                                <label for="editColor">Color</label>
+                                <select name="editColor" id="editColor" class="form-select"
+                                    aria-label="Default select example">
+                                    <option selected>Select color</option>
+                                    <option value="1">Blue</option>
+                                    <option value="2">Black</option>
+                                    <option value="3">White</option>
+                                    <option value="4">Red</option>
+                                    <option value="5">Green</option>
+                                    <option value="6">asdasd</option>
+                                </select>
+
+                                <label for="editCathegory">Size</label>
+                                <select name="editCathegory" id="editCathegory" class="form-select"
+                                    aria-label="Default select example">
+                                    <option selected>Select cathegory</option>
+                                    <option value="1">Dress</option>
+                                    <option value="2">Hoodies</option>
+                                    <option value="3">Manjacket</option>
+                                    <option value="4">Sweater</option>
+                                    <option value="5">Tops</option>
+                                    <option value="6">Woman</option>
+                                    <option value="7">Jeans</option>
+                                   
+                                </select>
+
+                                <label for="editPrice">Price</label>
+                                <input type="text" class="form-control" id="editPrice" name="editPrice" min="0">
+
+                                <label for="editStock">Stock</label>
+                                <input type="text" class="form-control" id="editStock" name="editStock" min="0">
+
+                                <label for="editImage">Img</label>
+                                <input type="file" class="form-control" id="editImage" name="editImage">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="szerkesztes btn btn-outline-success" onclick="updateProductData()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- hozzáadás ablaka-->
+
+<!-- searching form -->
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasSearchLabel">Search</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form class="d-flex" role="search" id="searchingForm">
+            <select name="searchingType" class="form-select mb-3" aria-label="Default select example"
+                id="selectid">
+                <option selected>Select type</option>
+                <option value="1">Name</option>
+                <option value="2">Size</option>
+                <option value="3">Color</option>
+                <option value="4">Category</option>
+                <option value="5">Price</option>
+                <option value="6">Stock</option>
+            </select>
+            
+            <input class="form-control mb-3" type="search" placeholder="Search.." aria-label="Search"
+                name="searching" width="300" height="200">
+            <button class="btn btn-outline-dark" type="submit">
+                <i class="fa-brands fa-sistrix"></i>
+            </button>
+            
+        </form>
+       
+    </div>
+</div>
+
+        <!-- profil kép szerkesztésének offcanvas (oldalról beugró) menüje -->
+        <div class="offcanvas offcanvas-start text-white rounded "
+            style=" background-color: #d5d5d698; backdrop-filter: blur(2.5px); max-width: 380px;  box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.3);" id="editProfile" >
+            <div class="offcanvas-header mx-auto">
+
+                <h1 class="offcanvas-title">Profile</h1>
+            </div>
+            <div class="offcanvas-body row mx-auto" id="offcanvasBody">
+
+            </div>
+        </div>
+
+        <!-- profil kép szerkesztésének modal ablaka -->
+        <div class="modal fade" id="editProfileImageModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit profile</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfileImage">
+                            <div class="form-group">
+                                <label for="editProfileImg">IMG</label>
+                                <input type="file" class="form-control" id="editProfileImg" name="editProfileImg">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn btn-outline-success" onclick="editImage()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- username szerkesztésének modal ablaka -->
+        <div class="modal fade" id="editProfileUsernameModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel2">Username edit</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfileUsername">
+                            <div class="form-group">
+                                <label for="editUsername">Username</label>
+                                <input type="text" class="form-control" id="editUsername" name="editUsername">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn btn-outline-success" onclick="editUsername()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- születési dátum szerkesztésének modal ablaka -->
+        <div class="modal fade" id="editProfileBirthdayModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel3">Edit Birthday</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfileBirthday">
+                            <div class="form-group">
+                                <label for="editBirthday">Bornday edit</label>
+                                <input type="date" class="form-control" id="editBirthday" name="editBirthday">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn btn-outline-success" onclick="editBirthday()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jelszó módosításának modal ablaka -->
+        <div class="modal fade" id="editProfilePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel4">Edit Password</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfilePassword">
+                            <div class="form-group">
+                                <label for="editPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="editPassword" placeholder="Password">
+                                <!--pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  > -->
+
+
+                                <label for="editPassword2" class="form-label"> Confirm Password</label>
+                                <input type="password" class="form-control" id="editPassword2" placeholder="Password">
+                            </div>
+
+                            <!-- <div id="message" class="mt-5">
+                                            <h3>A jelszónak a következőket kell tartalmaznia:</h3>
+                                            <p id="letter" class="invalid">Egy <b>kisbetű</b></p>
+                                            <p id="capital" class="invalid">Egy <b>nagybetű</b></p>
+                                            <p id="number" class="invalid">Egy <b>szám</b></p>
+                                            <p id="length" class="invalid">Minimum <b>8 karakter</b></p>
+                                        </div> -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn btn-outline-success" onclick="editPassword()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="admin.js"></script>
+    <script src="profile.js"></script>
+    <script src="logout.js"></script>
+
+</body>
+
+
+</html>

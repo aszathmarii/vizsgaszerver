@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hu" data-app="public" data-temple="shop-list" data-container-key data-content-key data-logged-in="false"
+    data-cookie-prefix="xf_">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sim Clothes Shop Cart</title>
+    <link rel="stylesheet" type="image/png" href="/backend/images/2024_02_28_admin.png" sizes="32x32">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="shortcut icon" href="/images/logo1.png" type="image/x-icon">
+
+</head>
+
+<body style="background-image: url(../images/web.jpg);" onload="getUserEmail(); GetProductInCart()">
+    <div class="carthead">
+
+    </div>
+
+    <h1>Cart</h1>
+
+
+    <div>
+
+        <div id="termekek">
+            <!--  Ide kerulnek a termekek  -->
+        </div>
+
+        <div>
+            <div id="fizetendo"></div>
+        <a href="pay.html" class="href">
+            <button type="button" class="btn" onclick="ordering()">
+                <i class="fa-solid fa-bag-shopping btn btn-outline-dark"></i>
+            </button>
+        </a>
+        </div>
+
+
+    </div>
+    <button type="button" class="btn btn-outline-dark">
+        <a href="user.html" class="nav-link active" aria-current="page" id="bag">
+            <i class="fa-solid fa-bag-shopping  btn btn-outline-light">Vissza a vásárláshoz!</i>
+        </a>
+    </button>
+    </div>
+    <script src="user.js"></script>
+    <script src="profile.js"></script>
+    <script src="cart.js"></script>
+
+    <script src="logout.js"></script>
+</body>
+
+</html>

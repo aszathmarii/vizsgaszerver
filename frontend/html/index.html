@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sim Clothes Login</title>
+	<link rel="stylesheet" href="style.css">
+	
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<script src="bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link rel="shortcut icon" href="/images/logo1.png" type="image/x-icon">
+	<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+	<style>
+	
+		/* Responszív elrejtés */
+		@media (max-width: 600px) {
+    .container {
+        display:block;
+		box-sizing: border-box;
+    }
+	.form-container{
+		width: 100%;
+	}
+
+	#loginForm{
+		width: auto !important;
+	}
+
+	.overlay-container{
+		display: none;
+	}
+}
+	</style>
+	
+	<div class="container" >
+	
+		<div class="form-container log-in-container" >
+				
+			<form id="loginForm">
+				<img  id="logo1" src="/images/logo1.png" alt="">
+				<h3>Login</h3>
+				<!--<div class="social-container">
+					<a href="#" class="social"><i class="fab fa fa-facebook fa-2x"></i></a>
+					<a href="#" class="social"><i class="fab fa fa-google fa-2x"></i></a>
+				</div>-->
+ 
+				<label id="email" for="loginEmail" class="form-label">Email</label>
+				<input type="email" class="form-control " id="loginEmail" >
+			
+
+
+				<label id="password" for="loginPassword" class="form-label">Password</label>
+				<input type="password" class="form-control" id="loginPassword" placeholder="" >
+			
+
+
+
+				<div class="logreggombok" style="margin-top: 30px;">
+					<div class="loginbutton">
+						<button type="submit" class=" btn bg btn-outline-light " onclick="forLogin()">Login</button>
+
+					</div>
+					<div class="loginbutton">
+
+						<button type="button" onclick="forRegister()" class="btn btn-outline-light ">Register</button>
+
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-right">
+					<img class="oip" src="/images/OIP.jpg" alt="">
+					<h3>Welcome!</h3>
+
+					<h3>Sim Clothes Shop</h3>
+					<p>Log in or sign up for a new account</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="login.js"></script>
+</body>
+
+</html>

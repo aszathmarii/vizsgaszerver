@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sim Clothes Shop </title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" href="/images/logo1.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body style="background-image: url(../images/web.jpg);" onload="getUserEmail(); fetchProduct()">
+    <input tpye="text" id="userID" class="d-none">
+
+    <div class="container-fluid mt-0">
+        <div class="container-fluid mt-0">
+            <!-- menu  -->
+           
+       <!-- Home Offcanvas -->
+       <div class="offcanvas offcanvas-top" id="homeOffcanvas" aria-labelledby="homeOffcanvasLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="homeOffcanvasLabel">Home Page</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <!-- Your home offcanvas content goes here -->
+          <nav class="navbar navbar-expand-sm rounded" style="background-color: #38383989; backdrop-filter: blur(2px);">
+            <div class="logo">
+              <img class="logoimg" src="/images/logo1.png" alt="Sim Clothes Shop Logo">
+              <h6 id="navcim" href="/home" target="_blank" rel="noopener noreferrer" class=""></h6>
+              <h6 class="headwebname">Sim Clothes Shop</h6>
+            </div>
+            <div class="container-fluid">
+              <ul class="navbar-nav me-left mb-2 mb-lg-2">
+                <li class="nav-item me-left">
+                  <button type="button" class="btn btn-outline-light" aria-current="page" id="profile"><i class="fa-solid fa-user-gear"></i></button>
+                </li>
+              </ul>
+    <a href=""></a>
+    <i id="refreshButton" class="fa-solid fa-sync fa-spin btn " ></i>
+    
+              <button id="logout" onclick="logout()" class="btn btn-outline-light float-end"> 
+                <i class="fa-solid fa-lock-open"></i>
+              </button>
+            </div>
+          </nav>
+        </div>
+      </div>
+    
+            <!--  menusor-->
+           <nav class="nav-menu-frame">
+                <div class="nav-menu" style="background-color: #38383989; backdrop-filter: blur(2px);">
+                    <ul class="navbar-nav me-left mb-2 mb-lg-2">
+                        <li class="nav-item">
+                            <button type="button" class="btn " data-bs-toggle="offcanvas" data-bs-target="#homeOffcanvas" aria-controls="homeOffcanvas">
+                            <a class="nav-link active" aria-current="page" id="home">
+                                <i class="fa-solid fa-house  btn btn-outline-light"></i>
+    
+                            </a>
+                        </button>
+                        </li>
+                        <!-- <li class="nav-item right">
+                        <a data-bs-backdrop="canvas" href="#categorycanvas" role="button" aria-controls="categorycanvas"
+                            class="nav-link active" aria-current="page" id="category">
+                            <button class="fa-solid fa-pen  btn btn-outline-light " onclick="category()"></button>
+                        </a>
+                    </li> -->
+                        
+                        <li class="nav-item">
+                            <button type="button" class="btn">
+                            <a  href="/cart" class="nav-link active" aria-current="page" id="bag">
+                                <i class="fa-solid fa-bag-shopping  btn btn-outline-light"></i>
+    
+                            </a>
+                        </button>
+                        </li>
+    
+                         <!--      keresésgomb -->
+                         <li class="nav-item">
+                            <button type="button" class="btn " data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
+    
+                            <a class="nav-link active" aria-current="page" id="news">
+                                <i class="fa-brands fa-sistrix  btn btn-outline-light "></i>
+                            </a>
+                        </button>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </nav>
+
+        <div id="product-list" class="row">
+
+        </div>
+
+        <footer class="p-footer" id="footer" style="margin-bottom: 0px;">
+            <div class="uix_extendedFooter">
+                <div class="pageContent">
+                    <div class="uix_extendedFooterRow">
+                    <div class="p-footer-copyrightRow">
+                        <div class="pageContent">
+                            <div class="uix_copyrightBlock">
+                                
+                                    <div class="p-footer-copyright">
+                                        
+                                            <a href="https://www.instagram.com/a_szathmarii/" class="u-concealed" dir="ltr" target="_blank" rel="sponsored noopener">Community platform by Szathmári Bence <sup>®</sup> <span class="copyright">© 2019-2024 BAROSSGÁBOR.</span></a>
+                                            <span class="thBranding"><span class="thBranding__pipe"> | </span><a href="https://dszcbaross.hu/" class="u-concealed" target="_BLANK" nofollow="nofollow">Style and add-ons by Szathmári Bence</a></span>
+                                            Created &amp; Designed by: <b>Szathmári Bence</b>                          
+                                    </div>
+                         </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </footer>
+    </div>
+
+        <!-- profil kép szerkesztésének offcanvas (oldalról beugró) menüje -->
+        <div class="offcanvas offcanvas-start text-white rounded "
+        style=" background-color: #d5d5d698; backdrop-filter: blur(2.5px); max-width: 380px;  box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.3);" id="editProfile" >
+            <div class="offcanvas-header mx-auto">
+
+                <h1 class="offcanvas-title">Profile</h1>
+            </div>
+            <div class="offcanvas-body row mx-auto" id="offcanvasBody">
+
+            </div>
+        </div>
+<!-- searching form -->
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasSearchLabel">Search</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form class="d-flex" role="search" id="searchingForm">
+            <select name="searchingType" class="form-select mb-3" aria-label="Default select example"
+                id="selectid">
+                <option selected>Select type</option>
+                <option value="1">Name</option>
+                <option value="2">Size</option>
+                <option value="3">Color</option>
+                <option value="4">Category</option>
+                <option value="5">Price</option>
+                <option value="6">Stock</option>
+            </select>
+            
+            <input class="form-control mb-3" type="search" placeholder="Search.." aria-label="Search"
+                name="searching" width="300" height="200">
+            <button class="btn btn-outline-dark" type="submit">
+                <i class="fa-brands fa-sistrix"></i>
+            </button>
+            
+        </form>
+       
+    </div>
+</div>
+        <!-- profil kép szerkesztésének modal ablaka -->
+        <div class="modal fade" id="editProfileImageModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit profile</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfileImage">
+                            <div class="form-group">
+                                <label for="editProfileImg">IMG</label>
+                                <input type="file" class="form-control" id="editProfileImg" name="editProfileImg">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn btn-outline-success" onclick="editImage()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- username szerkesztésének modal ablaka -->
+        <div class="modal fade" id="editProfileUsernameModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel2">Username edit</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfileUsername">
+                            <div class="form-group">
+                                <label for="editUsername">Username</label>
+                                <input type="text" class="form-control" id="editUsername" name="editUsername">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn btn-outline-success" onclick="editUsername()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- születési dátum szerkesztésének modal ablaka -->
+        <div class="modal fade" id="editProfileBirthdayModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel3">Edit Birthday</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfileBirthday">
+                            <div class="form-group">
+                                <label for="editBirthday">Bornday edit</label>
+                                <input type="date" class="form-control" id="editBirthday" name="editBirthday">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="btn btn-outline-success" onclick="editBirthday()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jelszó módosításának modal ablaka -->
+        <div class="modal fade" id="editProfilePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel4">Edit Password</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfilePassword">
+                            <div class="form-group">
+                                <label for="editPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="editPassword" placeholder="Password">
+                                <!--pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  > -->
+
+
+                                <label for="editPassword2" class="form-label"> Confirm Password</label>
+                                <input type="password" class="form-control" id="editPassword2" placeholder="Password">
+                            </div>
+
+                            <!-- <div id="message" class="mt-5">
+                                            <h3>A jelszónak a következőket kell tartalmaznia:</h3>
+                                            <p id="letter" class="invalid">Egy <b>kisbetű</b></p>
+                                            <p id="capital" class="invalid">Egy <b>nagybetű</b></p>
+                                            <p id="number" class="invalid">Egy <b>szám</b></p>
+                                            <p id="length" class="invalid">Minimum <b>8 karakter</b></p>
+                                        </div> -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+
+                        <button type="button" class="btn btn-outline-success" onclick="editPassword()">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kosrás offcanvas -->
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasKosar" aria-labelledby="offcanvasKosarLabel" c>
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasKosarLabel">Ordering</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <label  for="buyingStock">Stock</label>
+            <input   type="number" class="form-control" min="1" max="100" id="buyingStock" name="buyingStock">
+
+            <div>
+                <div class="kep">
+                    <img id="cartkep" src="" alt="">
+                </div>
+                <div class="szoveg">
+                    <p id="cartnev"></p>
+                    <p id="cartar"></p>
+                    <p id="cartszin"></p>
+                    <p id="cartmeret"></p>
+                </div>
+            </div> 
+            
+            <button type="button" class="btn btn-outline-dark" onclick="CartPrepare()">
+                <i class="fa-solid fa-basket-shopping"></i>
+            </button>
+           
+        </div>
+    </div>
+
+    <script src="user.js"></script>
+    <script src="profile.js"></script>
+
+    <script src="logout.js"></script>
+
+</body>
+
+</html>
